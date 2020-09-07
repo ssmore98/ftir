@@ -25,7 +25,7 @@ fields = {"%b":"blocks",
         "\"%y\"":"type",
         "\"%p\"":"name"}
 
-print(','.join([fields[field] for field in fields.keys()]))
+print(','.join(["\"{0}\"".format(fields[field]) for field in fields.keys()]))
 for arg in sys.argv[1:]:
     cmd = "find '{0}' -printf '{1}\\n'".format(arg, ','.join([field for field in fields.keys()]))
     os.system(cmd)
