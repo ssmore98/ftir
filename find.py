@@ -41,11 +41,11 @@ for arg in sys.argv[1:]:
     output.extend([line.strip() for line in proc.communicate()[0].decode("utf-8", "ignore").splitlines()])
     reader = csv.DictReader(output)
     data = list(reader)
-    for row in data:
-        if row['type'] in ['f'] and os.path.exists(row['name']):
-            with open(row['name'], 'rb') as fp:
-                row['sha512'] = hashlib.sha512(fp.read()).hexdigest()
-        else:
-            row['sha512'] = None
+#    for row in data:
+#        if row['type'] in ['f'] and os.path.exists(row['name']):
+#            with open(row['name'], 'rb') as fp:
+#                row['sha512'] = hashlib.sha512(fp.read()).hexdigest()
+#        else:
+#            row['sha512'] = None
     with open("{0}.json".format(os.path.basename(arg)), 'w') as fp:
         json.dump(data, fp, indent=4)
