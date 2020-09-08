@@ -6,7 +6,6 @@ import subprocess
 import shlex
 import re
 import csv
-import json
 
 fields = {"%b":"blocks",
         "\"%c\"":"update",
@@ -38,5 +37,8 @@ for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
     output.extend([line.strip() for line in proc.communicate()[0].decode("utf-8", "ignore").splitlines()])
     reader = csv.DictReader(output)
-    with open("{0}.json".format(os.path.basename(arg)), 'w') as fp:
-        json.dump(list(reader), fp, indent=4)
+    with open("{0}.csv".format(os.path.basename(arg)), 'w') as fp:
+        writer = csv.DictWriter(fp, fieldnames=fields.values(), quoting=csv.QUOTE_NONNUMERIC)
+        writer.writeheader()
+        for row in reader:
+            writer.writerow(row)
