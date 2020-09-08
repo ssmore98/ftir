@@ -34,6 +34,6 @@ for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
     pyplot.bar(group_names, df["blocks-binned"].value_counts())
 
     # set x/y labels and plot title
-    plt.pyplot.xlabel("blocks")
-    plt.pyplot.ylabel("count")
-    plt.pyplot.title("blocks bins")
+    matplotlib.pyplot.xlabel("blocks")
+    matplotlib.pyplot.ylabel("count")
+    matplotlib.pyplot.title("blocks bins")
