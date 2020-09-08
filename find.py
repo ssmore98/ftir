@@ -32,7 +32,7 @@ fields = {"%b":"blocks",
         "\"%p\"":"name"}
 
 output = [','.join(["\"{0}\"".format(fields[field]) for field in fields.keys()])]
-for arg in sys.argv[1:]:
+for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
     cmd = "find '{0}' -name \"[^\.]*\" -printf '{1}\\n'".format(arg, ','.join([field for field in fields.keys()]))
     cmd = shlex.split(cmd)
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
