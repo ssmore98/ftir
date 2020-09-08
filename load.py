@@ -9,7 +9,14 @@ import numpy
 for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
     fname = "{0}.csv".format(os.path.basename(arg))
     df = pandas.read_csv(fname)
-    print(df)
+    print(df.dtypes)
+    print(df.describe())
+    print(df['basename'].value_counts())
+    print(df['fstype'].value_counts())
+    print(df['group'].value_counts())
+    print(df['path'].value_counts())
+    print(df['permissions'].value_counts())
+    exit(0)
     missing_data = df.isnull()
     print(missing_data)
     for column in missing_data.columns.values.tolist():
@@ -31,9 +38,13 @@ for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
     matplotlib.pyplot.ylabel("count")
     matplotlib.pyplot.title("blocks bins")
 
+    pyplot.show()
+
     pyplot.bar(group_names, df["blocks-binned"].value_counts())
 
     # set x/y labels and plot title
     matplotlib.pyplot.xlabel("blocks")
     matplotlib.pyplot.ylabel("count")
     matplotlib.pyplot.title("blocks bins")
+
+    pyplot.show()
