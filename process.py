@@ -4,6 +4,7 @@ import pandas
 import matplotlib
 from matplotlib import pyplot
 import numpy
+import seaborn
 
 def find_missing_data(df):
     # missing data
@@ -34,6 +35,16 @@ for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
 
     print(df.dtypes)
 
+    # convert the update and modication time columns to date time
+#    df['update'] = pandas.to_datetime(df['update'])
+#    df['modification'] = pandas.to_datetime(df['modification'])
+#    print(df.dtypes)
+
+
+    print(df.corr())
+
+    seaborn.boxplot(x="UID", y="bytes", data=df)
+    matplotlib.pyplot.show();
     exit(0)
     bins = numpy.linspace(min(df["blocks"]), max(df["blocks"]), 4)
     print(bins)
