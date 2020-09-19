@@ -171,6 +171,144 @@ required=False,
 help="""Don't descend directories on other filesystems.""")
 parser.add_argument('PATH', nargs='+', action="store",
 help="""Path in the file system""")
+parser.add_argument('--amin', action='store', type=int, metavar="n",
+required=False,
+help="""File was last accessed n minutes ago.""")
+
+parser.add_argument('--anewer', action='store', metavar="FILE",
+required=False,
+help="""File  was  last  accessed  more recently than FILE was modified.  If
+FILE is a symbolic link and the -H option or the -L option is in effect, the
+access time of the file it points to is always used.""")
+
+parser.add_argument('--atime', action='store', type=int, metavar="n",
+required=False,
+help="""File was last accessed n*24 hours ago.  When find figures out how many
+24-hour periods ago the file was  last  accessed, any fractional part is
+ignored, so to match -atime +1, a file has to have been accessed at least two
+days ago.""")
+
+parser.add_argument('--cmin', action='store', type=int, metavar="n",
+required=False,
+help="""File's status was last changed n minutes ago.""")
+
+parser.add_argument('--cnewer', action='store', metavar="FILE",
+required=False,
+help="""File's  status  was  last changed more recently than FILE was modified.
+If FILE is a symbolic link and the -H option or the -L option is in effect, the
+status-change time of the file it points to is always used.""")
+
+parser.add_argument('--ctime', action='store', type=int, metavar="n",
+required=False,
+help="""File's status was last changed n*24 hours ago.  See the comments for
+-atime  to  understand  how  rounding  affects  the interpretation of file
+status change times.""")
+
+parser.add_argument('--empty', action='store_true',
+required=False,
+help="""File is empty and is either a regular file or a directory.""")
+
+parser.add_argument('--executable', action='store_true',
+required=False,
+help="""Matches  files  which are executable and directories which are
+searchable (in a file name resolution sense).  This takes into account access
+control lists and other permissions artefacts which the -perm test ignores.
+This test makes use  of the access(2) system call, and so can be fooled by NFS
+servers which do UID mapping (or root-squashing), since many systems implement
+access(2) in the client's kernel and so cannot make use of  the  UID  mapping
+information  held  on  the server.   Because  this test is based only on the
+result of the access(2) system call, there is no guarantee that a file for
+which this test succeeds can actually be executed.""")
+
+parser.add_argument('--false', action='store_true',
+required=False, help="Always false.")
+
+parser.add_argument('--fstype', action='store', metavar="type",
+required=False,
+help="""File is on a filesystem of type type.  The valid filesystem types vary
+among different versions of Unix;  an  incomplete list  of  filesystem  types
+that are accepted on some version of Unix or another is: ufs, 4.2, 4.3, nfs,
+tmp, mfs, S51K, S52K.  You can use -printf with the %%F directive to see the
+types of your filesystems.""")
+
+parser.add_argument('--gid', action='store', type=int, metavar="n",
+required=False, help="File's numeric group ID is n.")
+
+parser.add_argument('--group', action='store', metavar="gname",
+required=False,
+help="""File belongs to group gname (numeric group ID allowed).""")
+
+parser.add_argument('--ilname', action='store', metavar="PATTERN",
+required=False,
+help="""Like -lname, but the match is case insensitive.  If the -L option or
+the -follow option is in effect, this test  returns false unless the symbolic
+link is broken.""")
+
+parser.add_argument('--iname', action='store', metavar="PATTERN",
+required=False,
+help="""Like  -name,  but  the match is case insensitive.  For example, the
+patterns `fo*' and `F??' match the file names `Foo', `FOO', `foo', `fOo', etc.
+The pattern `*foo*` will also match a file called '.foobar'.""")
+
+parser.add_argument('--inum', action='store', type=int, metavar="n",
+required=False,
+help="""File has inode number n.  It is normally easier to use the -samefile
+test instead.""")
+
+parser.add_argument('--ipath', action='store', metavar="PATTERN",
+required=False,
+help="Like -path.  but the match is case insensitive.")
+
+parser.add_argument('--iregex', action='store', metavar="PATTERN",
+required=False,
+help="Like -regex, but the match is case insensitive.")
+
+parser.add_argument('--iwholename', action='store', metavar="PATTERN",
+required=False,
+help="See -ipath.    This alternative is less portable than -ipath.")
+
+parser.add_argument('--links', action='store', type=int, metavar="n",
+required=False,
+help="File has n links.")
+
+parser.add_argument('--lname', action='store', metavar="PATTERN",
+required=False,
+help="""File is a symbolic link whose contents match shell pattern PATTERN.
+The metacharacters do not treat  `/'  or  `.'  specially.   If  the -L option
+or the -follow option is in effect, this test returns false unless the symbolic
+link is broken.""")
+
+parser.add_argument('--mmin', action='store', type=int, metavar="n",
+required=False,
+help="File's data was last modified n minutes ago.")
+
+parser.add_argument('--mtime', action='store', type=int, metavar="n",
+required=False,
+help="""File's data was last modified n*24 hours ago.  See the comments for
+-atime to understand how rounding affects the interpretation of file
+modification times.""")
+
+parser.add_argument('--name', action='store', metavar="PATTERN",
+required=False,
+help="""Base  of  file  name (the path with the leading directories removed)
+matches shell pattern PATTERN.  Because the leading directories are removed,
+the file names considered for a match with -name will never include a  slash,
+so  `-name  a/b' will never match anything (you probably need to use -path
+instead).  The metacharacters (`*', `?', and `[]') match a `.' at the start of
+the base name (this is a change in findutils-4.2.2; see section STANDARDS
+CONFORMANCE below).  To ignore a  directory  and the files under it, use
+-prune; see an example in the description of -path.  Braces are not recognised
+as being special, despite the fact that some shells including Bash imbue braces
+with a special  meaning  in  shell  patterns.   The  filename  matching is
+performed with the use of the fnmatch(3) library function.   Don't forget to
+enclose the pattern in quotes in order to protect it from expansion by the
+shell.""")
+
+parser.add_argument('--newer', action='store', metavar="FILE",
+required=False,
+help="""File was modified more recently than FILE.  If FILE is a symbolic link
+and the -H option or the -L option is in  effect, the modification time of the
+file it points to is always used.""")
 
 args = parser.parse_args()
 
@@ -205,6 +343,57 @@ if args.xautofs:
     find_options.append("-xautofs")
 if args.xdev:
     find_options.append("-xdev")
+if args.amin:
+    find_options.append("-amin {0}".format(args.amin))
+if args.anewer:
+    find_options.append("-anewer {0}".format(args.anewer))
+if args.atime:
+    find_options.append("-atime {0}".format(args.atime))
+if args.cmin:
+    find_options.append("-cmin {0}".format(args.cmin))
+if args.cnewer:
+    find_options.append("-cnewer {0}".format(args.cnewer))
+if args.ctime:
+    find_options.append("-ctime {0}".format(args.ctime))
+if args.empty:
+    find_options.append("-empty")
+if args.executable:
+    find_options.append("-executable")
+if args.false:
+    find_options.append("-false")
+if args.gid:
+    find_options.append("-gid {0}".format(args.gid))
+if args.fstype:
+    find_options.append("-fstype {0}".format(args.fstype))
+if args.group:
+    find_options.append("-group {0}".format(args.group))
+if args.ilname:
+    find_options.append("-ilname {0}".format(args.ilname))
+if args.iname:
+    find_options.append("-iname {0}".format(args.iname))
+if args.inum:
+    find_options.append("-inum {0}".format(args.inum))
+if args.ipath:
+    find_options.append("-ipath {0}".format(args.ipath))
+if args.iregex:
+    find_options.append("-iregex {0}".format(args.iregex))
+if args.iwholename:
+    find_options.append("-iwholename {0}".format(args.iwholename))
+if args.links:
+    find_options.append("-links {0}".format(args.links))
+if args.lname:
+    find_options.append("-lname {0}".format(args.lname))
+if args.mmin:
+    find_options.append("-mmin {0}".format(args.mmin))
+if args.mtime:
+    find_options.append("-mtime {0}".format(args.mtime))
+if args.name:
+    find_options.append("-name {0}".format(args.name))
+if args.newer:
+    find_options.append("-newer {0}".format(args.newer))
+
+print(find_options)
+exit(0)
 
 output = [','.join(["\"{0}\"".format(fields[field]) for field in fields.keys()])]
 for path in [os.path.abspath(i) for i in args.PATH]:
