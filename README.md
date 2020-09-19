@@ -8,7 +8,8 @@ The software consists of two python scripts:
     - Performs data wrangling.
 
 **find.py**
-usage: find.py [-h] [-P] [-L] [-H] [-O {0,1,2,3}] [-d] [--daystart]
+
+    usage: find.py [-h] [-P] [-L] [-H] [-O {0,1,2,3}] [-d] [--daystart]
                [--ignore_readdir_race] [--maxdepth MAXDEPTH]
                [--mindepth MINDEPTH] [--mount] [--noignore_readdir_race]
                [--noleaf]
@@ -22,37 +23,19 @@ usage: find.py [-h] [-P] [-L] [-H] [-O {0,1,2,3}] [-d] [--daystart]
                [--name PATTERN] [--newer FILE]
                PATH [PATH ...]
 
-"This script scan the entire
-filesystem and creates the dataset containing information about
-accessible files and directories. The name of the file is root.csv.
+This script scan the entire filesystem and creates the dataset containing information about accessible files and directories. The name of the file is root.csv.
 
 positional arguments:
-  PATH                  Path in the file system
+
+    PATH                  Path in the file system
+
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -P                    Never follow symbolic links. This is the default
-                        behaviour. When find examines or prints information a
-                        file, and the file is a symbolic link, the information
-                        used shall be taken from the properties of the
-                        symbolic link itself.
-  -L                    Follow symbolic links. When find examines or prints
-                        information about files, the information used shall be
-                        taken from the properties of the file to which the
-                        link points, not from the link itself (unless it is a
-                        broken symbolic link or find is unable to examine the
-                        file to which the link points). Use of this option
-                        implies -noleaf. If you later use the -P option,
-                        -noleaf will still be in effect. If -L is in effect
-                        and find discovers a symbolic link to a subdirectory
-                        during its search, the subdirectory pointed to by the
-                        symbolic link will be searched. When the -L option is
-                        in effect, the -type predicate will always match
-                        against the type of the file that a symbolic link
-                        points to rather than the link itself (unless the
-                        symbolic link is broken). Using -L causes the -lname
-                        and -ilname predicates always to return false.
-  -H                    Do not follow symbolic links, except while processing
+
+    -h, --help            show this help message and exit
+    -P                    Never follow symbolic links. This is the default behaviour. When find examines or prints information a file, and the file is a symbolic link, the information used shall be taken from the properties of the symbolic link itself.
+    -L                  Follow symbolic links. When find examines or prints information about files, the information used shall be taken from the properties of the file to which the link points, not from the link itself (unless it is a broken symbolic link or find is unable to examine the file to which the link points). Use of this option implies -noleaf. If you later use the -P option, -noleaf will still be in effect. If -L is in effect and find discovers a symbolic link to a subdirectory during its search, the subdirectory pointed to by the symbolic link will be searched. When the -L option is in effect, the -type predicate will always match against the type of the file that a symbolic link points to rather than the link itself (unless the symbolic link is broken). Using -L causes the -lname and -ilname predicates always to return false.   
+    -H                  Do not follow symbolic links, except while processing
                         the command line arguments. When find examines or
                         prints information about files, the information used
                         shall be taken from the properties of the symbolic
@@ -68,7 +51,7 @@ optional arguments:
                         to a directory, the contents of that directory will be
                         examined (though of course -maxdepth 0 would prevent
                         this).
-  -O {0,1,2,3}          Enables query optimisation. The find program reorders
+    -O {0,1,2,3}          Enables query optimisation. The find program reorders
                         tests to speed up execution while preserving the
                         overall effect; that is, predicates with side effects
                         are not reordered relative to each other. The
