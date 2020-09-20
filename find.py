@@ -7,6 +7,7 @@ import shlex
 import re
 import csv
 import argparse
+import common
 
 fields = {"%b":"blocks",
         "\"%c\"":"update",
@@ -392,20 +393,21 @@ if args.name:
 if args.newer:
     find_options.append("-newer {0}".format(args.newer))
 
-print(find_options)
-exit(0)
-
-output = [','.join(["\"{0}\"".format(fields[field]) for field in fields.keys()])]
 for path in [os.path.abspath(i) for i in args.PATH]:
-    cmd = "find '{0}' {2} -name \"[^\.]*\" -printf '{1}\\n'".format(path,
-            ','.join([field for field in fields.keys()]),
-            ' '.join(find_options))
-    cmd = shlex.split(cmd)
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-    output.extend([line.strip() for line in proc.communicate()[0].decode("utf-8", "ignore").splitlines()])
-    reader = csv.DictReader(output)
-    with open("{0}.csv".format(os.path.basename(path)), 'w') as fp:
+    with open(common.CSVname(path), 'w') as fp:
         writer = csv.DictWriter(fp, fieldnames=fields.values(), quoting=csv.QUOTE_NONNUMERIC)
         writer.writeheader()
-        for row in reader:
-            writer.writerow(row)
+
+        cmd = "find '{0}' {2} -name \"[^\.]*\" -printf '{1}\\n'".format(path,
+                ','.join([field for field in fields.keys()]),
+                ' '.join(find_options))
+        cmd = shlex.split(cmd)
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        proc.stdin.close()
+        while not proc.poll():
+            line = proc.stdout.readline()
+            if line:
+                ln = re.sub(r'"', r'', line.decode("utf-8", "ignore").strip())
+                writer.writerow(dict(zip(fields.values(), re.split(r',', ln))))
+            else:
+                break
