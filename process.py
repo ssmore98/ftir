@@ -5,6 +5,7 @@ import matplotlib
 from matplotlib import pyplot
 import numpy
 import seaborn
+import common
 
 def find_missing_data(df):
     # missing data
@@ -17,12 +18,12 @@ def find_missing_data(df):
             print("")
 
 for arg in [os.path.abspath(i) for i in sys.argv[1:]]:
-    fname = "{0}.csv".format(os.path.basename(arg))
+    fname = common.CSVname(arg)
     df = pandas.read_csv(fname)
     df['basename'].replace(numpy.NaN, "", inplace=True)
     # reset index, because we droped rows
     df.reset_index(drop=True, inplace=True)
-    
+
     df['path'].replace(numpy.NaN, "/", inplace=True)
     # reset index, because we droped rows
     df.reset_index(drop=True, inplace=True)
